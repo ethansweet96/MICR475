@@ -1,0 +1,24 @@
+---
+title: "Homework 3"
+author: Ethan Sweet
+date: 09/03/2021
+output: github_document
+---
+
+# Load in Tidyverse
+  
+```{r setup_workspace,message=FALSE}
+
+library(tidyverse)
+```
+
+# Show the graph, show the graph!
+```{r}
+print(mpg)
+```
+# Here is my crappy graph! Sorry for your eyes!
+```{r HW3 Plot}
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x = manufacturer, y = cty, colour = trans))
+```
+
