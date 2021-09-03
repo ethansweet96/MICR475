@@ -32,6 +32,9 @@ print(mpg)
 
 # Here is my crappy graph! Sorry for your eyes!
 
+I am using this plot to look at the city miles per gallon of different
+auto manafacturers
+
 ``` r
 ggplot(data = mpg) +
   geom_point(mapping = aes(x = manufacturer, y = cty, colour = trans))
