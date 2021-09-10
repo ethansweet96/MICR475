@@ -22,10 +22,11 @@ sum(2+3)
 # Part 3: nycflights13 Package
 
 ``` r
-#Filter Data
+#Filtering data for American Airline flights
 aa_flights <- filter (flights, carrier=="AA")
 aa_flights <- as.data.frame(aa_flights)
 
+#Plotting the filtered data
 ggplot(data = aa_flights) +
   geom_point(mapping = aes(x = dep_delay, y = arr_delay))
 ```

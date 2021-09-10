@@ -26,8 +26,7 @@ sum(2+3)
 # Part 3: nycflights13 Package
 ```{r}
 
-
-#Filter Data
+#Filtering Data for American Airline Flights
 aa_flights <- filter (flights, carrier=="AA")
 aa_flights <- as.data.frame(aa_flights)
 
