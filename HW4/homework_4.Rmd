@@ -1,0 +1,30 @@
+---
+title: "Homework 4"
+author: Ethan Sweet
+date: 09/10/2021
+output: github_document
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(nycflights13)
+```
+
+# Calculate Sum with Variables
+
+```{r}
+answer <- function(a = 3, b = 2) {
+   sum <- a + b
+  print(answer)
+}
+
+```
+
+# Calculate Sum with Sum Function
+
+```{r}
+sum(2+3)
+
+```
+
+
