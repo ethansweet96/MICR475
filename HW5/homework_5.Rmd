@@ -1,0 +1,41 @@
+---
+title: "Homework 5"
+author: "Ethan Sweet"
+date: 09/17/2021
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+glimpse(diamonds)
+```
+
+## Part 1 - Counts of Cut in Diamonds
+```{r}
+
+cut_type <- filter (diamonds, cut=="Ideal")
+cut_type <- as.data.frame(cut_type)
+
+count(cut_type)
+```
+
+## Part 2 - Avg. Size of 100 Largest Diamonds
+```{r}
+avg_size <- diamonds %>%
+  group_by(clarity) %>%
+  slice_max(order_by=carat, n=100, with_ties = FALSE)
+avg_size
+```
+### Scatter for Plots Part 2
+
+```{r}
+ggplot(data = avg_size) +
+  geom_point(mapping = aes(x = x, y = y)) # plot of x vs y
+
+avg_size_filt <- filter (avg_size, z > 2)
+ggplot(data = avg_size_filt) +
+  geom_point(mapping = aes(x = x, y = z)) # plot of filtered x vs z 
+
+
+```
