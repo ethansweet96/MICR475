@@ -7,28 +7,53 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 str(diamonds)
+library(scales)
 library(nls2)
 library(broom)
+library(ggthemes)
+library(ggpubr)
+library(ggplot2)
 
-```
-# Part 1
-```{r}
-#Must complete this section, not done. 
-#ggplot(diamonds, aes(x = clarity,y = price))
-
+#Do you ever just get to a point where you don't even know what packages you need?
 ```
 
-# Part 2
+# Question 1
 ```{r}
+data(diamonds)
+summary(diamonds)
+
+ggplot(diamonds, aes(factor(color), (x=price/carat), fill=color)) + geom_violin(trim = FALSE) + theme_base() + ggtitle("Diamond Price per Carat grouped by Color") + xlab("Color") + ylab("Diamond Price per Carat in US Dollars") 
 
 
+#Slope of the relationship of price as a function of weight (carat) for each unique color, in decreasing order of slope
+```
+```{r}
+cuberoot_trans = function()trans_new('cuberoot', transform = function(x) x^(1/3), inverse = function(x) x^3)
+
+ggplot(aes(x = carat, y = price, color = color), data = diamonds) + 
+  geom_point(alpha = 0.5, size = 1, position = 'jitter') +
+  scale_color_brewer(type = 'div',
+                     guide = guide_legend(title = 'Color', 
+                                          reverse = T,
+                                          override.aes = list(alpha = 1, 
+                                                              size = 2))) +  
+  scale_x_continuous(trans = cuberoot_trans(), limits = c(0.2, 5),
+                     breaks = c(0.2, 0.5, 1, 2, 3, 4, 5)) + 
+  scale_y_continuous(trans = log10_trans(), limits = c(350, 30000),
+                     breaks = c(350, 1000, 5000, 10000, 15000, 20000, 25000, 30000)) +
+  ggtitle('Price by Carat & Color') + theme_base()
+```
+
+# Question 2 
+
+```{r}
 
 monod_mod <- formula(density ~ (conc*dmax)/(conc + k))
 
 sqrt_mod <- formula(density ~ beta_1 * sqrt(conc) + beta_0)
 single_sqrt_model <- nls2(sqrt_mod,
-data = DNase,
-start = list(beta_1 = 0.5, beta_0 = 0.1))
+                          data = DNase,
+                          start = list(beta_1 = 0.5, beta_0 = 0.1))
 
 compare_models <- DNase %>%
   group_by(Run) %>%
@@ -44,5 +69,15 @@ compare_models <- DNase %>%
   sqrt_aic= map_dbl(sqrt_mod,~glance(.)$AIC),
   monod_aic=map_dbl(monod_mod,~glance(.)$AIC))
 
+longer_data <- compare_models %>%
+  pivot_longer(sqrt_aic:monod_aic, names_to = "Model", values_to = "Value")%>%
+  ggplot(aes(x = Run, y=Value)) +
+  facet_wrap(vars(Model), ncol = 3) +
+  geom_point() +
+  geom_line() +
+  labs(x = "Run Number", y = "AIC Value") 
+
+
+print(longer_data)
 ```
 
