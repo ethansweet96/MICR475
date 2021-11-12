@@ -1,0 +1,40 @@
+---
+title: "SEM Trial"
+output:
+  html_document
+---
+```{r}
+
+
+library(lavaan)  #for performing the CFA
+library(semPlot)  #for plotting your CFA
+library(dplyr)  #for subsetting data 
+```
+
+
+# Important Notes
+* make sure to set your working directory to where the file is located, e.g. setwd('D:/Downloads/Handout 1 - Regression') you can do this in R Studio using menus by going to the Session menu - 'Set Working Directory' - To Source File Location
+
+```{r}
+semdata <- read.table("semtrial.txt")
+#note that this data is in free format so we use read.table
+
+#add column names
+names(semdata) <- c("DO", "H2S", "SO4", "NH3N", "CH4")
+head(semdata)  #view data file to see what data is pulled in
+
+
+sem.model.measurement <- "ENV =~ 1*DO + H2S + SO4 + CH4 
+#make indicator latent environmental factors with geochemical parameters
+#MIC =~ 1* 
+# makeindicator latent microbial factor with biomass variable as the marker
+#INV =~ 1* 
+#make indicator latent conduct factor with diversity variable as the marker"
+
+sem.fit.measurement <- sem(sem.model.measurement, data = semdata)
+summary(sem.fit.measurement, fit.measures = TRUE)
+
+semPaths(sem.fit.measurement, "par", edge.label.cex = 1.2, fade = FALSE)  #plot our CFA. you can change layout with layout = argument. see ?semPaths() for more. 
+
+```
+
