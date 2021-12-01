@@ -1,7 +1,7 @@
 ---
 title: "MICR 575 Final Project: Srtuctural Equation Models"
 output:
-  html_document
+  github_document
 ---
 
 
@@ -82,6 +82,7 @@ Fitexmodel <- sem(exmodel, data=semcsv)
 summary(Fitexmodel, standardized=TRUE)
 semPaths(Fitexmodel, "par", edge.label.cex = 1, edge.label.position= .5, fade = FALSE)
 ```
+
 # Conclusion
 
 Although the analyses were completed I received the following warnings from lavaan: 
