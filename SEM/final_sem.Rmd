@@ -1,0 +1,107 @@
+---
+title: "MICR 575 Final Project: Srtuctural Equation Models"
+output:
+  html_document
+---
+
+
+# Introduction:
+
+Below are a series of predictive models known as structural equation models, or SEM(s) for short. These models analyze how observable variables correlate with variables that cannot be directly measured (latent variables), which, in this instance, are hyporheic zone health which is a combination of geochemical conditions , environmental conditions, microbial populations, and invertebrate populations. The models in this project utilize structural equation modeling within the “lavaan” package to produce path analysis plots which are an examination of the direction and magnitude of the relationship between variables. 
+
+For more information follow these links: 
+
+Lavaan package (https://lavaan.ugent.be/) Sem package (https://cran.r-project.org/web/packages/sem/sem.pdf)
+
+```{r}
+
+library(lavaan)  #for performing the analyses
+library(semPlot)  #for plotting your analyses
+library(dplyr)  #for subsetting data 
+library(png) #for displaying .png files
+semcsv=read.csv('sem_final.csv')
+```
+
+```{r}
+head(semcsv)  #view data file to confirm what data is pulled in
+```
+
+# Structural Regression Model 
+```{r}
+
+#First step is creating the sem model with latent variables
+#Second step is creating predictor variables by regression of latent variables
+
+sem.model.measurement <- "CHEM =~ 1*DO + H2S + CH4 + TEMP + COND + NH3N + PH
+#make indicator latent environmental health with observable geochemical factors and DO as marker
+
+MIC =~ 1* M.Diversity + M.Abundance
+#make indicator latent microbial health factor with biomass and prokaryote diversity as the marker
+
+INV =~ 1* I.Diversity + I.Abundance
+#make indicator latent invertibrate abundance (counts) and diversity variable as the marker
+
+ENV =~ 1* DD + O.Cond + G.Cond + K
+#make indicator latent environmental health factor with overburden conditions, geological conditions, hydraulic conductivity, with downstream distance variable as the marker
+
+HZHEALTH =~ CHEM + MIC + INV + ENV" 
+
+sem.fit.measurement <- sem(sem.model.measurement, data = semcsv)
+summary(sem.fit.measurement, fit.measures = TRUE)
+
+semPaths(sem.fit.measurement, "par", edge.label.cex = .75, edge.label.position= .5, fade = FALSE, layout="tree3", intercepts = TRUE, residuals = TRUE, thresholds = TRUE, intStyle = "multi", combineGroups = TRUE)
+
+#plot the CFA. you can change layout with layout = argument. see ?semPaths() for more. 
+```
+
+```{r}
+#Key for SEM Path Diagrams
+
+library("png")
+pd <- readPNG("PathDiagram.png", native = TRUE)
+plot.new() 
+rasterImage(pd,0,0,1,1)
+
+```
+
+# Exogenous Model 
+```{r}
+exmodel <- 'CHEM =~ 1*DO + H2S + CH4 + TEMP + COND + NH3N + PH
+#intercepts (nu = tau) 
+
+#Specify parameters on observed variables
+DO ~ 1
+H2S ~ 1 
+CH4 ~ 1
+TEMP ~1 
+COND ~ 1
+NH3N ~ 1
+PH ~ 1'
+
+Fitexmodel <- sem(exmodel, data=semcsv) 
+summary(Fitexmodel, standardized=TRUE)
+semPaths(Fitexmodel, "par", edge.label.cex = 1, edge.label.position= .5, fade = FALSE)
+```
+# Conclusion
+
+Although the analyses were completed I received the following warnings from lavaan: 
+
+lav_data_full(data = data, group = group, cluster = cluster, : lavaan
+WARNING: some observed variances are (at least) a factor 1000 times larger than others; use varTable(fit) to investigate
+ 
+Warning in lav_model_vcov(lavmodel = lavmodel, lavsamplestats = lavsamplestats, : lavaan WARNING:
+Could not compute standard errors! The information matrix could not be inverted. This may be a symptom that the model is not identified.
+
+This may indicate that data clean up needs to occur, since the variances are very high in the observable variables. However, some of the data pulled into these models is not "real" data, instead it is dummy data randomly generated and entered into the model. Data for these models may need to be normalized (z-score) prior to utilizing the SEM(s). 
+
+
+
+
+
+
+
+
+
+
+
+
