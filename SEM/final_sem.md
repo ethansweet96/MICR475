@@ -5,15 +5,55 @@ MICR 575 Final Project: Srtuctural Equation Models
 
 Below are a series of predictive models known as structural equation
 models, or SEM(s) for short. These models analyze how observable
-variables correlate with variables that cannot be directly measured
-(latent variables), which, in this instance, are hyporheic zone health
-which is a combination of geochemical conditions , environmental
-conditions, microbial populations, and invertebrate populations. The
-models in this project utilize structural equation modeling within the
-“lavaan” package to produce path analysis plots which are an examination
-of the direction and magnitude of the relationship between variables.
+variables (variables we can directly measure in reality) correlate with
+variables that cannot be directly measured (latent variables), which, in
+this instance, are hyporheic zone health which is a combination of
+geochemical conditions , environmental conditions, microbial
+populations, and invertebrate populations. The hyporheic zone (HZ) is an
+ecotone within riparian systems where substantial mixing of surface
+water and groundwater occurs across fluctuating (hydro)geological,
+biological, and atmospheric boundaries (Bencala, 2000; Boulton et al.,
+2010; Ye et al., 2012). The HZ is an important habitat for microbes,
+lotic macroinvertebrates, and groundwater invertebrates, as well as
+larger organisms at higher trophic levels (Holmes, 2000). As much as
+90%–98% of biogeochemical processing within a watershed occurs within
+the riparian zone, or the interface between aquatic and terrestrial
+habitats, which is dominated by the hyporheic zone. The models in this
+project utilize structural equation modeling within the “lavaan” package
+to produce path analysis plots which are an examination of the direction
+and magnitude of the relationship between variables. Structural equation
+models are used in a variety of modeling situations when typical
+regression models may not be sufficient. It must be noted, however, that
+the user must use caution when interpreting SEM results as the model
+conditions and convergences may not be adequate for causation (Beran &
+Violato, 2010). These relationships have the potential to reveal hidden
+processes/relationships between the many variables considered in my
+research.
 
-For more information follow these links:
+*References:*
+
+-   Bencala K, Walters R (1983). Simulation of Solute Transport in a
+    Mountain Pool-and-Riffle Stream: A Transient Storage Model. Water
+    Resources Research - WATER RESOUR RES 19: 718-724.
+
+-   Beran, T.N., Violato, C. Structural equation modeling in medical
+    research: a primer. BMC Res Notes 3, 267 (2010).
+    <https://doi.org/10.1186/1756-0500-3-267>
+
+-   Boulton AJ, Datry T, Kasahara T, Mutz M, Stanford JA (2010). Ecology
+    and management of the hyporheic zone: stream–groundwater
+    interactions of running waters and their floodplains. Journal of the
+    North American Benthological Society 29: 26-40.
+
+-   Holmes R (2000). The Importance of Ground Water to Stream Ecosystem
+    Function. pp 137-148.
+
+-   Ye S, Covino TP, Sivapalan M, Basu NB, Li H-Y, Wang S-W (2012).
+    Dissolved nutrient retention dynamics in river networks: A modeling
+    investigation of transient flows and scale effects. Water Resources
+    Research 48.
+
+For more information on SEM’s and Lavaan follow these links:
 
 Lavaan package (<https://lavaan.ugent.be/>) Sem package
 (<https://cran.r-project.org/web/packages/sem/sem.pdf>)
